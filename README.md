@@ -81,7 +81,7 @@ gedmo.listener.translatable:
 Now add config in `app/config/config.yml`:
 ```
 # Tleroch News
-tleroch_news:
+news:
     news_class:
     #Put here your own news entity
     news_type:
@@ -93,7 +93,7 @@ tleroch_news:
 Finally add route in `app/config/routing.yml`:
 ```
 tleroch_news:
-    resource: "@TlerochNewsBundle/Resources/config/routing.yml"
+    resource: "@NewsBundle/Resources/config/routing.yml"
     prefix: /admin
 ```
 
