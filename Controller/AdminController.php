@@ -24,7 +24,7 @@ class AdminController extends Controller {
 
         $news = $em->getRepository($this->getParameter('tleroch_news.news_class'))->findAllWithLocale($this->getParameter('locale'));
 
-        return $this->render('TLerochNewsBundle:Admin:list.html.twig', array(
+        return $this->render('NewsBundle:admin:list.html.twig', array(
                     'news' => $news
         ));
     }
@@ -71,7 +71,7 @@ class AdminController extends Controller {
             }
         }
 
-        return $this->render('TlerochNewsBundle:Admin:add.html.twig', array(
+        return $this->render('NewsBundle:Admin:add.html.twig', array(
                     'form' => $form->createView()
         ));
     }
@@ -116,7 +116,7 @@ class AdminController extends Controller {
             return $this->redirectToRoute('tleroch_news_admin');
         }
 
-        return $this->render('TlerochNewsBundle:Admin:edit.html.twig', array(
+        return $this->render('NewsBundle:Admin:edit.html.twig', array(
                     'news' => $news,
                     'form' => $form->createView()
         ));
@@ -171,7 +171,7 @@ class AdminController extends Controller {
             return $this->redirectToRoute('tleroch_news_admin');
         }
 
-        return $this->render('TlerochNewsBundle:Admin:delete.html.twig', array(
+        return $this->render('NewsBundle:Admin:delete.html.twig', array(
                     'news' => $news,
                     'form' => $form->createView()
         ));

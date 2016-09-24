@@ -76,6 +76,10 @@ gedmo.listener.translatable:
             - [ setDefaultLocale, [ "%locale%" ] ]
             - [ setTranslatableLocale, [ "%locale%" ] ]
             - [ setTranslationFallback, [ false ] ]
+twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
 ```
 
 Now add config in `app/config/config.yml`:
