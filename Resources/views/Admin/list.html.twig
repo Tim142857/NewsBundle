@@ -1,0 +1,36 @@
+{% extends 'TlerochAdminBundle:Default:layout.html.twig' %}
+
+{% block page_title %}Actualités{% endblock %}
+
+{% block content %}
+    <p class="pull-right"><a href="{{ path('tleroch_news_admin_add') }}" class="btn btn-primary">Nouvelle actualité</a></p>
+    <p>Il y a actuellement <strong>{{ news|length }}</strong> actualités.</p>
+{% for flash_message in app.session.flashBag.get('news') %}
+                    <p class="alert alert-success">{{ flash_message }}</p>
+{% endfor %}
+    {% if news %}
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Date'|trans }}</th>
+                <th>{{ 'State'|trans }}</th>
+                <th>{{ 'Options'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for item in news %}
+            <tr{% if not item.active %} class="danger"{% endif %}>
+                <td>{{ item.title }}</td>
+                <td>{{ item.datedisplay|localizeddate('medium', 'none') }}</td>
+                <td>{{ (item.active ? 'Online' : 'Offline')|trans }}</td>
+                <td>
+                    <a href="{{ path('tleroch_news_admin_edit', { id: item.id }) }}" class="btn btn-success"><span class="fa fa-pencil"></span></a>
+                    <a href="{{ path('tleroch_news_admin_delete', { id: item.id }) }}" class="btn btn-danger"><span class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

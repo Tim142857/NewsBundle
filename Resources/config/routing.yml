@@ -1,0 +1,24 @@
+tleroch_news_admin:
+    path: /news
+    defaults: { _controller: NewsBundle:Admin:listing }
+
+tleroch_news_admin_add:
+    path: /news/add
+    defaults: { _controller: NewsBundle:Admin:add }
+    
+tleroch_news_admin_edit:
+    path: /news/edit/{id}
+    defaults: { _controller: NewsBundle:Admin:edit }
+    requirements:
+        id: ^\d+$
+    
+tleroch_news_admin_delete:
+    path: /news/delete/{id}
+    defaults: { _controller: NewsBundle:Admin:delete }
+    requirements:
+        id: ^\d+$
+
+tleroch_news_upload:
+    path: /news/upload
+    defaults: { _controller: NewsBundle:Admin:upload }
+    

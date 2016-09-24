@@ -1,0 +1,14 @@
+{% extends 'TlerochAdminBundle:Default:layout.html.twig' %}
+
+{% block page_title %}Actualités - Supprimer{% endblock %}
+
+{% block content %}
+    <p class="text-right"><a href="{{ path('tleroch_news_admin') }}" class="btn btn-danger">Retour</a></p>
+
+    <div class="alert alert-warning">
+        <p>Êtes-vous sur de vouloir supprimer l'actualité "<strong>{{ news.title }}</strong>" ?</p>
+        {{ form_start(form) }}
+            {{ form_widget(form.submit, { attr: { class: 'btn btn-danger' }, 'label': 'Delete' }) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

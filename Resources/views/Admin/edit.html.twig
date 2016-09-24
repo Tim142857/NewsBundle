@@ -1,0 +1,131 @@
+{% import 'TlerochAdminBundle:Default:macros.html.twig' as macros %}
+
+{% extends 'TlerochAdminBundle:Default:layout.html.twig' %}
+
+{% block page_title %}Actualités - Modifier{% endblock %}
+
+{% block content %}
+    {{ form_start(form, { attr: { class: 'form-horizontal form-admin' } }) }}
+        {{ form_errors(form) }}
+        
+        <div class="form-group{% if not form.title.vars.valid %} has-error{% endif %}">
+            <label for="{{ form.title.vars.id }}" class="col-sm-2 control-label">{{ 'Title'|trans }}</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.title) }}
+                {{ macros.form_errors(form.title) }}
+            </div>
+        </div>
+
+        <div class="form-group{% if not form.content.vars.valid %} has-error{% endif %}">
+            <label for="{{ form.content.vars.id }}" class="col-sm-2 control-label">{{ 'Content'|trans }}</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.content) }}
+                {{ macros.form_errors(form.content) }}
+            </div>
+        </div>
+
+        <div class="form-group{% if not form.date_display.vars.valid %} has-error{% endif %}">
+            <label for="{{ form.date_display.vars.id }}" class="col-sm-2 control-label">{{ 'Date'|trans }}</label>
+            <div class="col-sm-10 checkbox-list">
+                {{ form_widget(form.date_display) }}
+                {{ macros.form_errors(form.date_display) }}
+            </div>
+        </div>
+
+        <div class="form-group{% if not form.image.vars.valid %} has-error{% endif %}">
+            <label for="{{ form.imageupload.vars.id }}" class="col-sm-2 control-label">{{ 'Image'|trans }}</label>
+            <div class="col-sm-10 containerupload">
+                {% if not news.image is null %}
+                    <a href="{{ asset('uploads/news/'~news.image) }}">Voir l'image</a><br />
+                {% endif %}
+                <span class="btn btn-default fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Sélectionner une image...</span>
+                    {{ form_widget(form.imageupload, { 'attr': { 'data-field': form.image.vars.id } } ) }}
+                </span>
+                {{ macros.form_errors(form.image) }}
+            </div>
+        </div>
+
+        <div class="form-group{% if not form.file.vars.valid %} has-error{% endif %}">
+            <label for="{{ form.fileupload.vars.id }}" class="col-sm-2 control-label">{{ 'File'|trans }}</label>
+            <div class="col-sm-10 containerupload">
+                {% if not news.file is null %}
+                    <a href="{{ asset('uploads/news/'~news.file) }}">Voir le fichier</a><br />
+                {% endif %}
+                <span class="btn btn-default fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Sélectionner un fichier...</span>
+                    {{ form_widget(form.fileupload, { 'attr': { 'data-field': form.file.vars.id } } ) }}
+                </span>
+                {{ macros.form_errors(form.file) }}
+            </div>
+        </div>
+
+        <div class="form-group{% if not form.active.vars.valid %} has-error{% endif %}">
+            <label for="{{ form.active.vars.id }}" class="col-sm-2 control-label">{{ 'Online'|trans }}</label>
+            <div class="col-sm-10 checkbox-list">
+                {{ form_widget(form.active) }}
+                {{ macros.form_errors(form.active) }}
+            </div>
+        </div>
+
+    {% for key, item in form.children if not item.rendered %}
+        {% if key not in [ "_token" ] and item.vars.block_prefixes.1 != 'hidden' %}
+            <div class="form-group{% if not item.vars.valid %} has-error{% endif %}">
+                <label for="{{ item.vars.id }}" class="col-sm-2 control-label">{{ form_label(item) }}</label>
+                <div class="col-sm-10">
+                    {{ form_widget(item) }}
+                    {{ macros.form_errors(item) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">{{ 'Update'|trans }}</button>
+                <a href="{{ path('tleroch_news_admin') }}" class="btn btn-danger">Annuler</a>
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+
+            $('.fileinput-button input[type="file"]').on('change', function(e) {
+
+                var elm = $(this);
+
+                var data = new FormData();
+                data.append('file', e.target.files[0]);
+
+                $.ajax({
+                    url: '{{ path('tleroch_news_upload') }}',
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    data: data,
+                    success: function (data)
+                    {
+                        if(data.success)
+                        {
+                            elm.parents('.containerupload').find('a').remove();
+
+                            $('#'+elm.data('field')).val(data.file);
+                            elm.parents('.containerupload').prepend('<a href="'+data.url+'">Voir le fichier</a><br />');
+                        }
+                        else
+                        {
+                        }
+                    }
+                });
+            });
+            
+            $('#{{ form.content.vars.id }}').redactor();
+        });
+    </script>
+{% endblock %}

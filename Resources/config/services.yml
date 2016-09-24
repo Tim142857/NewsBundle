@@ -1,0 +1,16 @@
+services:
+    tleroch.news.file_update:
+        class: Tleroch\NewsBundle\EventListener\FileUpdate
+        arguments: ['%tleroch_news.upload_folder%', '@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate, connection: default }
+
+    tleroch.news.form_factory:
+        class: Tleroch\NewsBundle\Form\Factory\NewsFormFactory
+        arguments: ['@form.factory', '%tleroch_news.news_type%', '%tleroch_news.upload_folder%' ]
+
+    tleroch.news.form_type:
+        class: Tleroch\NewsBundle\Form\NewsType
+        arguments: [ '%tleroch_news.news_class%' ]
+        tags:
+            - { name: form.type, alias: 'tleroch_news_type' }
