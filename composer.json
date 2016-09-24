@@ -1,0 +1,17 @@
+{
+    "name": "Tleroch/newsBundle",
+    "type": "symfony-bundle",
+    "description": "This Bundle helps you to do a news system",
+    "license": "MIT",
+    "keywords": [],
+    "require": {
+        "php": "^5.5.9|~7.0",
+        "symfony/framework-bundle": "^3.0",
+        "stof/doctrine-extensions-bundle": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tleroch\\NewsBundle\\": ""
+        }
+    }
+}
