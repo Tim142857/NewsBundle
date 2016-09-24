@@ -54,7 +54,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new Tleroch\AdminBundle\TlerochNewsBundle(),
+            new Tleroch\NewsBundle\NewsBundle(),
         );
 
         // ...
@@ -106,3 +106,4 @@ You can now read documentation:
 * [Repository](Resources/doc/repository.md)
 * [Form](Resources/doc/form.md)
 * [Routing](Resources/doc/routing.md)
+
