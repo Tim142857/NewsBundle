@@ -76,10 +76,6 @@ gedmo.listener.translatable:
             - [ setDefaultLocale, [ "%locale%" ] ]
             - [ setTranslatableLocale, [ "%locale%" ] ]
             - [ setTranslationFallback, [ false ] ]
-twig.extension.intl:
-        class: Twig_Extensions_Extension_Intl
-        tags:
-            - { name: twig.extension }
 ```
 
 Now add config in `app/config/config.yml`:
@@ -101,7 +97,24 @@ tleroch_news:
     prefix: /admin
 ```
 
-Step 4: Read documentation
+Step 4: Install twig extensions
+--------------------------
+
+```bash
+$ composer require twig/extensions
+```
+
+Add the extension using the service configuration:
+
+```php
+#app/config/services.yml
+twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+```
+
+Step 5: Read documentation
 --------------------------
 
 You can now read documentation:
