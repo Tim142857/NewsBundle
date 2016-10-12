@@ -76,6 +76,20 @@ gedmo.listener.translatable:
             - [ setDefaultLocale, [ "%locale%" ] ]
             - [ setTranslatableLocale, [ "%locale%" ] ]
             - [ setTranslationFallback, [ false ] ]
+            
+gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+gedmo.listener.sluggable:
+        class: Gedmo\Sluggable\SluggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]            
 ```
 
 Now add config in `app/config/config.yml`:
